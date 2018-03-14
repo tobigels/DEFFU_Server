@@ -89,6 +89,7 @@ public class ConnectionManager{
                 break;
             case DataEventType_Server.ASKGAMESTART:
                 Debug.Log("- " + connectionId + " - ASKGAMESTART");
+                playerManager.GameTurn_length = (float)serializationUnit.DeserializeHelper(m.Content, m.Content.Length);
                 playerManager.GameStarted = true;
                 break;
         }
@@ -258,7 +259,8 @@ public class ConnectionManager{
                 byte[] recBuffer = new byte[1024];
                 int dataSize;
                 byte error;
-                NetworkEventType recData = NetworkTransport.Receive(out recHostId, out connectionId, out channelId, recBuffer, recBuffer.Length, out dataSize, out error);
+                int bufferSize = 1024;
+                NetworkEventType recData = NetworkTransport.Receive(out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
 
                 switch (recData) {
                     case NetworkEventType.Nothing:

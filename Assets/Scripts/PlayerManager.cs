@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour {
     private bool gameStarted;
     private float accumulatedTime;
 
-    private const float FRAME_LENGTH = 0.2f;
+    private float gameTurn_length = 0.1f;
 
     public static PlayerManager instance = null;
 
@@ -27,15 +27,13 @@ public class PlayerManager : MonoBehaviour {
         if(gameStarted) {
             accumulatedTime += Time.deltaTime;
 
-            while(accumulatedTime > FRAME_LENGTH) {
+            while(accumulatedTime > gameTurn_length) {
 
-                if(gameFrame < 200) {
-                    connectionManager.ExecuteGameTurn();
-                }
+                connectionManager.ExecuteGameTurn();
                 
                 gameFrame++;
 
-                accumulatedTime -= FRAME_LENGTH;
+                accumulatedTime -= gameTurn_length;
             }
         }
     }
@@ -101,6 +99,16 @@ public class PlayerManager : MonoBehaviour {
             gameStarted = value;
         }
     }
+
+    public float GameTurn_length {
+        get {
+            return gameTurn_length;
+        }
+        set {
+            gameTurn_length = value;
+        }
+    }
+
 
 
     /// <summary>
